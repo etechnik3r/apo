@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Broitzemer Apotheke Braunschweig – Entwurf 2 · Bento</title>
+  <meta name="description" content="Broitzemer Apotheke in Braunschweig: persönliche Beratung, Medikationsanalyse, Hautpflege, Naturheilkunde, Botendienst und Online-Bestellung." />
+  <meta name="theme-color" content="#f3efe8" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-latin-wght.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/inter-latin-wght.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/css/fonts.css" />
+  <link rel="stylesheet" href="assets/css/design2.css" />
+  <link rel="stylesheet" href="assets/css/shared.css" />
+</head>
+<body class="d2">
+  <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-mobile" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2.5"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-sms" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+    <symbol id="i-pill" viewBox="0 0 24 24"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+    <symbol id="i-sock" viewBox="0 0 24 24"><path d="M8 2h7v9l3.5 3.5a3.5 3.5 0 0 1-5 5L8 14z"/><path d="M8 6h7"/></symbol>
+    <symbol id="i-device" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M9 7h6M12 14v3M10.5 15.5h3"/></symbol>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M10 2v6.5L5 14a4 4 0 0 0 3.5 6h7A4 4 0 0 0 19 14l-5-5.5V2"/><path d="M8.5 2h7M7.5 14h9"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-cross" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></symbol>
+    <symbol id="i-nav" viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M12 10v6M9 13h6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="logo" viewBox="0 0 42 42"><rect x="1" y="1" width="40" height="40" rx="12" fill="#d8232a" stroke="none"/><path d="M14.2 30 L20 12.5 h2 L27.8 30 h-3.5 l-1.2-3.9 h-4.2 L17.7 30 z M19.8 23.3 h2.4 L21 19 z" fill="#fff" stroke="none"/><rect x="27.5" y="9" width="7.5" height="2.4" rx="1.2" fill="#fff" stroke="none"/><rect x="30.05" y="6.45" width="2.4" height="7.5" rx="1.2" fill="#fff" stroke="none"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+  <!-- ===================== HEADER (schwebende Pille) ===================== -->
+  <header class="top" id="top" data-header>
+    <div class="top-inner">
+      <a href="#top" class="brand" aria-label="Broitzemer Apotheke – Startseite">
+        <svg class="mark" aria-hidden="true"><use href="#logo"/></svg>
+        <span>Broitzemer <em>Apotheke</em></span>
+      </a>
+      <nav class="top-nav" aria-label="Hauptnavigation" data-spy>
+        <a href="#leistungen">Leistungen</a>
+        <a href="#bestellen">Bestellen</a>
+        <a href="#team">Team</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+      <div class="top-cta">
+        <span class="live" data-status role="status"><span class="dot" aria-hidden="true"></span><span data-status-short>…</span></span>
+        <a href="tel:+49531873518" class="round" aria-label="Anrufen: 0531 873518"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></a>
+        <a href="#bestellen" class="pill pill-red">Bestellen</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===================== HERO-BENTO ===================== -->
+    <section class="wrap hero" aria-label="Willkommen">
+      <div class="bento">
+        <div class="tile t-intro">
+          <span class="kicker">Apotheke in Broitzem</span>
+          <h1>Nah und <mark>kompetent.</mark></h1>
+          <p>Beratung, die zuhört. Medikamente, die ankommen.</p>
+          <div class="actions">
+            <a href="#bestellen" class="pill pill-ink pill-lg">Medikamente bestellen <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <a href="#leistungen" class="pill pill-line pill-lg">Leistungen</a>
+          </div>
+        </div>
+
+        <figure class="tile t-photo">
+          <img src="assets/img/aussenansicht.jpg" alt="Außenansicht der Broitzemer Apotheke an der Turmstraße" width="1400" height="900" fetchpriority="high">
+          <figcaption class="sticker"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Turmstraße 1A</figcaption>
+        </figure>
+
+        <a class="tile t-status" href="#kontakt" data-status>
+          <span class="tile-label"><span class="dot" aria-hidden="true"></span>Heute</span>
+          <strong data-status-short>…</strong>
+          <span class="t-status-sub" data-status-sub>Öffnungszeiten werden geladen</span>
+          <span class="t-status-hours" data-status-hours></span>
+        </a>
+
+        <a class="tile t-hotline" href="tel:+498008735180">
+          <span class="tile-label">Gratis-Bestellhotline</span>
+          <strong>0800 87 35 180</strong>
+          <span class="corner"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span>
+        </a>
+
+        <a class="tile t-deliver" href="#bestellen">
+          <span class="tile-label">Botendienst</span>
+          <strong>Wir bringen’s vorbei.</strong>
+          <svg class="big-ic" aria-hidden="true"><use href="#i-truck"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===================== LEISTUNGEN ===================== -->
+    <section class="wrap sec" id="leistungen">
+      <header class="sec-head reveal">
+        <h2>Leistungen</h2>
+        <p>Was wir besonders gut können.</p>
+      </header>
+
+      <div class="bento">
+        <article class="tile t-medi reveal" id="medikationsanalyse">
+          <img src="assets/img/leistungen/medikationsanalyse.jpg" alt="" width="1200" height="960" loading="lazy">
+          <div class="t-medi-body">
+            <span class="tag tag-white"><svg class="i" aria-hidden="true"><use href="#i-pill"/></svg>Therapiesicherheit</span>
+            <h3>Medikations&shy;analyse</h3>
+            <p>Mehrere Medikamente? Wir prüfen, ob alles zusammenpasst.</p>
+            <ol class="flow">
+              <li><span>1</span>Prüfen</li>
+              <li><span>2</span>Besprechen</li>
+              <li><span>3</span>Plan mitnehmen</li>
+            </ol>
+          </div>
+        </article>
+
+        <article class="tile t-pdl reveal" id="pdl">
+          <span class="tile-label">Kassenleistung</span>
+          <strong class="zero">0&nbsp;€</strong>
+          <h3>Diese Beratungen zahlt Ihre Krankenkasse</h3>
+          <ul>
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Große Medikationsberatung <small>ab 5 Dauermedikamenten</small></li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Blutdruck-Check <small>bei Blutdrucksenkern</small></li>
+            <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Inhalationstraining <small>bei Asthma &amp; COPD</small></li>
+          </ul>
+          <a href="tel:+49531873518" class="pill pill-white">Termin: 0531 873518</a>
+        </article>
+
+        <article class="tile t-card t-skin reveal" id="hautpflege">
+          <div class="t-card-img"><img src="assets/img/leistungen/hautpflege.jpg" alt="" width="1200" height="960" loading="lazy"></div>
+          <div class="t-card-body">
+            <h3>Hautpflege</h3>
+            <p>Frisch angerührte Cremes – und eine Hautanalyse per Messgerät.</p>
+          </div>
+        </article>
+
+        <article class="tile t-card t-nature reveal" id="naturheilkunde">
+          <div class="t-card-img"><img src="assets/img/leistungen/naturheilkunde.jpg" alt="" width="1200" height="960" loading="lazy"></div>
+          <div class="t-card-body">
+            <h3>Naturheilkunde</h3>
+            <p>Homöopathie, Schüßler-Salze, Bachblüten, Pflanzenheilkunde u.&nbsp;v.&nbsp;m.</p>
+          </div>
+        </article>
+
+        <article class="tile t-more reveal" id="service">
+          <h3>Außerdem</h3>
+          <ul class="chips">
+            <li>Blutdruck messen</li><li>Kompressions&shy;strümpfe</li><li>Geräte&shy;einweisung</li><li>Reise&shy;beratung</li><li>Rezepturen</li><li>Kosmetik</li><li>Karten&shy;zahlung</li><li>Ratgeber</li>
+          </ul>
+        </article>
+
+        <article class="tile t-club reveal">
+          <div class="club-text">
+            <span class="tile-label">Kundenkarte · kostenlos</span>
+            <h3>Ihre Medikamente immer im Blick.</h3>
+            <p>Wechselwirkungs-Check, Belege für Kasse &amp; Steuer und 3&nbsp;% auf Freiwahl-Artikel.</p>
+          </div>
+          <div class="club-card" aria-hidden="true">
+            <svg class="mark"><use href="#logo"/></svg>
+            <span class="club-pct">3&nbsp;%</span>
+            <span class="club-name">Kundenkarte</span>
+            <span class="club-chip"></span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== BESTELLEN ===================== -->
+    <section class="wrap sec" id="bestellen">
+      <header class="sec-head reveal">
+        <h2>Bestellen, wie Sie mögen</h2>
+        <p>Vorbestellen und abholen – oder liefern lassen.</p>
+      </header>
+      <div class="ways">
+        <a class="tile way w-app reveal" href="#bestellen">
+          <svg class="big-ic" aria-hidden="true"><use href="#i-mobile"/></svg>
+          <span class="tile-label">App</span>
+          <strong>„Meine Apotheke"</strong>
+          <small>Rezept fotografieren – fertig.</small>
+        </a>
+        <a class="tile way w-sms reveal" href="sms:22833?body=apo">
+          <svg class="big-ic" aria-hidden="true"><use href="#i-sms"/></svg>
+          <span class="tile-label">SMS</span>
+          <strong>„apo" an 22 8 33</strong>
+          <small>Wir melden uns zurück.</small>
+        </a>
+        <a class="tile way w-tel reveal" href="tel:+498008735180">
+          <svg class="big-ic" aria-hidden="true"><use href="#i-phone"/></svg>
+          <span class="tile-label">Hotline</span>
+          <strong>0800 87 35 180</strong>
+          <small>Kostenlos aus allen Netzen.</small>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===================== TEAM ===================== -->
+    <section class="wrap sec" id="team" data-carousel>
+      <header class="sec-head sec-head-split reveal">
+        <div>
+          <h2>Das sind wir</h2>
+          <p>10 Menschen, ein Team – mit Weiterbildungen von Geriatrie bis Ernährung.</p>
+        </div>
+        <div class="car-btns">
+          <button type="button" class="round" data-prev aria-label="Zurück blättern"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <button type="button" class="round" data-next aria-label="Weiter blättern"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </div>
+      </header>
+      <div class="team-car">
+        <ul class="team" data-track tabindex="0" aria-label="Teammitglieder">
+          <li><img src="assets/img/team/cathrin-burs.jpg" alt="" width="640" height="800" loading="lazy"><span><b>Cathrin Burs</b><small>Apothekerin · Inhaberin</small></span></li>
+          <li><img src="assets/img/team/andrea-lehnert.jpg" alt="" width="640" height="800" loading="lazy"><span><b>Andrea Lehnert</b><small>Apothekerin · ATHINA</small></span></li>
+          <li><img src="assets/img/team/merle-goericke.jpg" alt="" width="640" height="800" loading="lazy"><span><b>Merle Göricke</b><small>Apothekerin · ATHINA</small></span></li>
+          <li><img src="assets/img/team/anette-klopp.jpg" alt="" width="640" height="800" loading="lazy"><span><b>Anette Klopp</b><small>Apothekerin</small></span></li>
+          <li><img src="assets/img/team/maj-britt-nachtigall.jpg" alt="" width="640" height="800" loading="lazy"><span><b>Maj-Britt Nachtigall</b><small>Apothekerin</small></span></li>
+          <li><img src="assets/img/team/sarah-muehlbrandt.jpg" alt="" width="640" height="800" loading="lazy"><span><b>Sarah Mühlbrandt</b><small>PTA</small></span></li>
+          <li><img src="assets/img/team/silke-lutz.jpg" alt="" width="640" height="800" loading="lazy"><span><b>Silke Lutz</b><small>PTA</small></span></li>
+          <li><img src="assets/img/team/julia-bertram.jpg" alt="" width="640" height="800" loading="lazy"><span><b>Julia Bertram</b><small>PTA</small></span></li>
+          <li><img src="assets/img/team/paulin-stauder.jpg" alt="" width="640" height="800" loading="lazy"><span><b>Paulin Stauder</b><small>PTA</small></span></li>
+          <li><img src="assets/img/team/angie-breuer.jpg" alt="" width="640" height="800" loading="lazy"><span><b>Angie Breuer</b><small>PTA</small></span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== KONTAKT ===================== -->
+    <section class="wrap sec" id="kontakt">
+      <header class="sec-head reveal">
+        <h2>Vorbeikommen</h2>
+        <p>Turmstraße 1A · 38122 Braunschweig</p>
+      </header>
+
+      <div class="bento">
+        <div class="tile t-week reveal" id="oeffnungszeiten">
+          <div class="t-week-head">
+            <h3>Öffnungszeiten</h3>
+            <span class="live" data-status><span class="dot" aria-hidden="true"></span><span data-status-label>…</span></span>
+          </div>
+          <div class="week" data-hours data-now-line>
+            <div class="wk-axis" aria-hidden="true"><span style="--h:8">8</span><span style="--h:10">10</span><span style="--h:12">12</span><span style="--h:14">14</span><span style="--h:16">16</span><span style="--h:18">18</span></div>
+            <div class="wk" data-day="1"><b>Mo</b><div class="track" aria-hidden="true"><i style="--s:480;--e:810"></i><i style="--s:870;--e:1080"></i></div><small>8:00–13:30 · 14:30–18:00</small></div>
+            <div class="wk" data-day="2"><b>Di</b><div class="track" aria-hidden="true"><i style="--s:480;--e:810"></i><i style="--s:870;--e:1080"></i></div><small>8:00–13:30 · 14:30–18:00</small></div>
+            <div class="wk" data-day="3"><b>Mi</b><div class="track" aria-hidden="true"><i style="--s:480;--e:810"></i><i style="--s:870;--e:1080"></i></div><small>8:00–13:30 · 14:30–18:00</small></div>
+            <div class="wk" data-day="4"><b>Do</b><div class="track" aria-hidden="true"><i style="--s:480;--e:810"></i><i style="--s:870;--e:1080"></i></div><small>8:00–13:30 · 14:30–18:00</small></div>
+            <div class="wk" data-day="5"><b>Fr</b><div class="track" aria-hidden="true"><i style="--s:480;--e:810"></i><i style="--s:870;--e:1080"></i></div><small>8:00–13:30 · 14:30–18:00</small></div>
+            <div class="wk" data-day="6"><b>Sa</b><div class="track" aria-hidden="true"><i style="--s:540;--e:780"></i></div><small>9:00–13:00</small></div>
+            <div class="wk" data-day="0"><b>So</b><div class="track" aria-hidden="true"></div><small>geschlossen</small></div>
+          </div>
+        </div>
+
+        <div class="tile t-contact reveal">
+          <h3>Kontakt</h3>
+          <a href="tel:+49531873518"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg><span><b>0531 873518</b><small>Telefon</small></span></a>
+          <a href="tel:+498008735180"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg><span><b>0800 87 35 180</b><small>Bestellhotline, gratis</small></span></a>
+          <a href="mailto:info@broitzemer-apotheke.de"><svg class="i" aria-hidden="true"><use href="#i-mail"/></svg><span><b>info@broitzemer-apotheke.de</b><small>E-Mail</small></span></a>
+        </div>
+
+        <div class="tile t-emergency reveal">
+          <svg class="big-ic" aria-hidden="true"><use href="#i-cross"/></svg>
+          <span class="tile-label">Notdienst</span>
+          <h3>Wir haben zu?</h3>
+          <p>Die nächste dienstbereite Apotheke – rund um die Uhr.</p>
+          <div class="actions">
+            <a class="pill pill-white" href="https://www.aponet.de/apotheke/notdienstsuche" target="_blank" rel="noopener" aria-label="Notdienst-Apotheke bei aponet.de finden (öffnet in neuem Tab)">Notdienst finden</a>
+            <a class="pill pill-ghost-w" href="tel:22833">22 8 33</a>
+          </div>
+        </div>
+
+        <div class="tile t-map reveal">
+          <div class="map-embed" id="mapEmbed" data-src="https://www.openstreetmap.org/export/embed.html?bbox=10.4726%2C52.2304%2C10.4886%2C52.2374&amp;layer=mapnik&amp;marker=52.2339%2C10.4806">
+            <div class="map-consent" id="mapConsent">
+              <svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>
+              <b>Karte von OpenStreetMap</b>
+              <p>Beim Laden werden Daten (u.&nbsp;a. Ihre IP-Adresse) an OpenStreetMap übertragen. <a href="datenschutz.html">Mehr erfahren</a></p>
+              <button type="button" class="pill pill-ink" id="mapLoadBtn">Karte laden</button>
+            </div>
+          </div>
+          <a class="map-route" href="https://www.google.com/maps/search/?api=1&amp;query=Broitzemer+Apotheke+Turmstra%C3%9Fe+1A+38122+Braunschweig" target="_blank" rel="noopener" aria-label="Route planen (öffnet Google Maps in neuem Tab)"><svg class="i" aria-hidden="true"><use href="#i-nav"/></svg>Route planen</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="wrap foot">
+    <div class="foot-inner">
+      <a href="#top" class="brand"><svg class="mark" aria-hidden="true"><use href="#logo"/></svg><span>Broitzemer <em>Apotheke</em></span></a>
+      <span class="foot-copy">© <span data-year>2026</span> Broitzemer Apotheke · Inh. Cathrin Burs</span>
+      <span class="foot-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="barrierefreiheit.html">Barrierefreiheit</a>
+        <button type="button" class="cookie-settings-btn" id="cookieSettings">Cookies</button>
+      </span>
+    </div>
+  </footer>
+
+  <!-- ===================== ENTWURFS-UMSCHALTER ===================== -->
+  <nav class="ds-switch" aria-label="Design-Entwürfe">
+    <div class="ds-inner">
+      <div class="ds-label"><small>Entwurf 2 von 3</small><b>Bento</b></div>
+      <div class="ds-dots">
+        <a href="index.html" aria-label="Entwurf 1">1</a>
+        <a href="index2.html" aria-current="page" aria-label="Entwurf 2">2</a>
+        <a href="index3.html" aria-label="Entwurf 3">3</a>
+      </div>
+      <a class="ds-next" href="index3.html">Nächstes Design <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </nav>
+
+  <!-- ===================== APP-TAB-LEISTE (mobil) ===================== -->
+  <nav class="tabbar" aria-label="Schnellnavigation" data-spy>
+    <a href="#top"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Start</a>
+    <a href="#leistungen"><svg class="i" aria-hidden="true"><use href="#i-grid"/></svg>Leistungen</a>
+    <a href="#bestellen" class="tab-main"><span><svg class="i" aria-hidden="true"><use href="#i-bag"/></svg></span>Bestellen</a>
+    <a href="#team"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg>Team</a>
+    <a href="#kontakt"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg>Kontakt</a>
+  </nav>
+
+  <!-- ===================== COOKIE-HINWEIS ===================== -->
+  <div class="cookie-banner" id="cookieBanner" role="region" aria-label="Hinweis zu Datenschutz" hidden>
+    <b>Datenschutz</b>
+    <p>Wir speichern nur technisch Notwendiges. Die Karte lädt Inhalte von OpenStreetMap (u.&nbsp;a. Ihre IP-Adresse). <a href="datenschutz.html">Mehr</a></p>
+    <div class="cookie-actions">
+      <button type="button" id="cookieEssential">Nur notwendige</button>
+      <button type="button" class="primary" id="cookieAll">Karte erlauben</button>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

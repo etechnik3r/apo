@@ -1,48 +1,54 @@
 /* =========================================================
    Broitzemer Apotheke – Interaktivität
+   Gemeinsam genutzt von allen drei Design-Entwürfen
+   (index.html, index2.html, index3.html). Alle Funktionen
+   greifen nur, wenn die jeweiligen Elemente auf der Seite existieren.
    ========================================================= */
 (function () {
   "use strict";
 
-  /* ---------- Jahr im Footer ---------- */
-  var yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------- Header: Schatten beim Scrollen ---------- */
-  var header = document.querySelector(".header");
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function store(kind) {
+    try { return window[kind]; } catch (e) { return null; }
+  }
+  function getItem(kind, key) {
+    try { var s = store(kind); return s ? s.getItem(key) : null; } catch (e) { return null; }
+  }
+  function setItem(kind, key, val) {
+    try { var s = store(kind); if (s) s.setItem(key, val); } catch (e) {}
+  }
+
+  /* ---------- Jahr im Footer ---------- */
+  $$("[data-year]").forEach(function (el) { el.textContent = String(new Date().getFullYear()); });
+
+  /* ---------- Header: Zustand beim Scrollen ---------- */
+  var header = $("[data-header]");
+  var bottomBar = $("[data-bottombar]");
   var onScroll = function () {
-    if (!header) return;
-    header.classList.toggle("scrolled", window.scrollY > 8);
+    var y = window.scrollY;
+    if (header) header.classList.toggle("scrolled", y > 8);
+    if (bottomBar) bottomBar.classList.toggle("show", y > window.innerHeight * 0.45);
   };
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
   /* ---------- Mobile-Navigation ---------- */
-  var burger = document.getElementById("burger");
-  var nav = document.getElementById("nav");
-
-  function closeNav() {
-    document.body.classList.remove("nav-open");
-    if (nav) nav.classList.remove("open");
-    if (burger) {
-      burger.setAttribute("aria-expanded", "false");
-      burger.setAttribute("aria-label", "Menü öffnen");
-    }
-  }
-  function toggleNav() {
-    var open = nav.classList.toggle("open");
+  var burger = $("#burger");
+  var nav = $("#nav");
+  function setNav(open) {
+    if (!nav || !burger) return;
+    nav.classList.toggle("open", open);
     document.body.classList.toggle("nav-open", open);
     burger.setAttribute("aria-expanded", String(open));
     burger.setAttribute("aria-label", open ? "Menü schließen" : "Menü öffnen");
   }
   if (burger && nav) {
-    burger.addEventListener("click", toggleNav);
-    nav.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", closeNav);
-    });
-    window.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeNav();
-    });
+    burger.addEventListener("click", function () { setNav(!nav.classList.contains("open")); });
+    $$("a", nav).forEach(function (a) { a.addEventListener("click", function () { setNav(false); }); });
+    window.addEventListener("keydown", function (e) { if (e.key === "Escape") setNav(false); });
   }
 
   /* ---------- Öffnungszeiten-Logik ---------- */
@@ -70,145 +76,163 @@
     var day = now.getDay();
     var mins = now.getHours() * 60 + now.getMinutes();
     var today = SCHEDULE[day];
-
-    // Aktuell geöffnet?
     for (var i = 0; i < today.length; i++) {
-      if (mins >= today[i][0] && mins < today[i][1]) {
-        return { open: true, until: today[i][1], todayRanges: today };
-      }
+      if (mins >= today[i][0] && mins < today[i][1]) return { open: true, until: today[i][1], today: today };
     }
-    // Öffnet heute später?
     for (var j = 0; j < today.length; j++) {
-      if (mins < today[j][0]) {
-        return { open: false, nextDay: day, nextOpen: today[j][0], todayRanges: today };
-      }
+      if (mins < today[j][0]) return { open: false, nextDay: day, nextOpen: today[j][0], today: today };
     }
-    // Nächster Öffnungstag in den kommenden 7 Tagen
     for (var k = 1; k <= 7; k++) {
       var d = (day + k) % 7;
-      if (SCHEDULE[d].length) {
-        return { open: false, nextDay: d, nextOpen: SCHEDULE[d][0][0], todayRanges: today };
-      }
+      if (SCHEDULE[d].length) return { open: false, nextDay: d, nextOpen: SCHEDULE[d][0][0], today: today };
     }
-    return { open: false, todayRanges: today };
+    return { open: false, today: today };
   }
 
-  // Text nur bei echter Änderung setzen – wichtig für die role="status"-Live-Region
-  function setText(el, txt) {
-    if (el && el.textContent !== txt) el.textContent = txt;
-  }
+  // Text nur bei echter Änderung setzen – wichtig für role="status"-Live-Regionen
+  function setText(el, txt) { if (el && el.textContent !== txt) el.textContent = txt; }
 
   function renderStatus() {
     var now = new Date();
     var st = computeStatus(now);
-
-    var dot = document.getElementById("statusDot");
-    var label = document.getElementById("statusLabel");
-    var sub = document.getElementById("statusSub");
-    var hoursEl = document.getElementById("statusHours");
-
-    if (hoursEl) setText(hoursEl, st.todayRanges.length ? rangesLabel(st.todayRanges) : "Geschlossen");
-
-    if (dot) dot.classList.toggle("open", !!st.open);
-
+    var label, sub, short;
     if (st.open) {
-      setText(label, "Jetzt geöffnet");
-      setText(sub, "bis " + fmt(st.until) + " Uhr");
+      label = "Jetzt geöffnet";
+      short = "Geöffnet";
+      sub = "bis " + fmt(st.until) + " Uhr";
     } else if (typeof st.nextDay === "number") {
-      setText(label, "Aktuell geschlossen");
-      var dayWord = st.nextDay === now.getDay() ? "heute" : DAY_NAMES[st.nextDay];
-      setText(sub, "Öffnet " + dayWord + " um " + fmt(st.nextOpen) + " Uhr");
+      label = "Gerade geschlossen";
+      short = "Geschlossen";
+      var dayWord = st.nextDay === now.getDay() ? "heute" : (st.nextDay === (now.getDay() + 1) % 7 ? "morgen" : DAY_NAMES[st.nextDay]);
+      sub = "öffnet " + dayWord + " " + fmt(st.nextOpen) + " Uhr";
     } else {
-      setText(label, "Aktuell geschlossen");
-      setText(sub, "Bitte Öffnungszeiten beachten");
+      label = "Gerade geschlossen";
+      short = "Geschlossen";
+      sub = "siehe Öffnungszeiten";
     }
 
-    // Heutigen Tag in der Tabelle hervorheben
-    var rows = document.querySelectorAll("#hoursTable .row");
-    rows.forEach(function (row) {
+    $$("[data-status]").forEach(function (box) {
+      box.classList.toggle("is-open", !!st.open);
+      box.classList.toggle("is-closed", !st.open);
+      $$("[data-status-label]", box).forEach(function (el) { setText(el, label); });
+      $$("[data-status-short]", box).forEach(function (el) { setText(el, short); });
+      $$("[data-status-sub]", box).forEach(function (el) { setText(el, sub); });
+      $$("[data-status-hours]", box).forEach(function (el) {
+        setText(el, st.today.length ? rangesLabel(st.today) : "Heute geschlossen");
+      });
+    });
+
+    // Heutigen Tag in Tabellen / Wochen-Balken hervorheben
+    $$("[data-hours] [data-day]").forEach(function (row) {
       row.classList.toggle("today", Number(row.getAttribute("data-day")) === now.getDay());
+    });
+
+    // „Jetzt“-Linie in Wochen-Balken (Design 2): Position zwischen 07:00 und 19:00
+    var mins = now.getHours() * 60 + now.getMinutes();
+    var pos = (mins - 420) / (1140 - 420);
+    $$("[data-now-line]").forEach(function (el) {
+      el.style.setProperty("--now", Math.max(0, Math.min(1, pos)).toFixed(4));
+      el.classList.toggle("visible", pos >= 0 && pos <= 1);
     });
   }
   renderStatus();
-  setInterval(renderStatus, 60 * 1000); // jede Minute aktualisieren
+  setInterval(renderStatus, 60 * 1000);
 
   /* ---------- Scroll-Reveal ---------- */
-  var reveals = document.querySelectorAll(".reveal");
-  if ("IntersectionObserver" in window && reveals.length) {
+  var reveals = $$(".reveal");
+  if ("IntersectionObserver" in window && reveals.length && !reduceMotion) {
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry, idx) {
-        if (entry.isIntersecting) {
-          var el = entry.target;
-          // kleine Staffelung für Geschwister-Elemente
-          var siblings = Array.prototype.indexOf.call(el.parentNode.children, el);
-          el.style.transitionDelay = Math.min(siblings, 6) * 60 + "ms";
-          el.classList.add("in");
-          io.unobserve(el);
-        }
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        var idx = Array.prototype.indexOf.call(el.parentNode.children, el);
+        el.style.transitionDelay = Math.min(idx, 5) * 70 + "ms";
+        el.classList.add("in");
+        io.unobserve(el);
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
     reveals.forEach(function (el) { io.observe(el); });
   } else {
     reveals.forEach(function (el) { el.classList.add("in"); });
   }
 
-  /* ---------- Dock: Icon-Rail erscheint, sobald die Quickbar oben aus dem Bild gescrollt ist ---------- */
-  var quickbar = document.querySelector(".quickbar");
-  if (quickbar) {
-    var dockTick = false;
-    var updateDock = function () {
-      dockTick = false;
-      // Dock einblenden, sobald die Quickbar oberhalb des Sichtfensters verschwunden ist
-      var past = quickbar.getBoundingClientRect().bottom < 8;
-      document.body.classList.toggle("dock-on", past);
-    };
-    var onDockScroll = function () {
-      if (!dockTick) { dockTick = true; requestAnimationFrame(updateDock); }
-    };
-    window.addEventListener("scroll", onDockScroll, { passive: true });
-    window.addEventListener("resize", onDockScroll, { passive: true });
-    updateDock();
+  /* ---------- Scrollspy: aktiver Menüpunkt ---------- */
+  var spyLinks = $$("[data-spy] a[href^='#']");
+  if ("IntersectionObserver" in window && spyLinks.length) {
+    var byId = {};
+    spyLinks.forEach(function (a) {
+      var id = a.getAttribute("href").slice(1);
+      if (!id) return;
+      (byId[id] = byId[id] || []).push(a);
+    });
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        spyLinks.forEach(function (a) { a.classList.remove("active"); a.removeAttribute("aria-current"); });
+        (byId[entry.target.id] || []).forEach(function (a) { a.classList.add("active"); a.setAttribute("aria-current", "true"); });
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    Object.keys(byId).forEach(function (id) {
+      var sec = document.getElementById(id);
+      if (sec) spy.observe(sec);
+    });
   }
 
-  /* ---------- Team: sanfter Parallax-Drift beim Scrollen ---------- */
-  var teamFlow = document.querySelector(".team-flow");
-  if (teamFlow && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    var teamItems = teamFlow.querySelectorAll(".member");
-    // unterschiedliche Geschwindigkeiten je Kachel → lebendiges Driften
-    var teamSpeeds = [0.05, 0.12, 0.03, 0.09, 0.15, 0.04, 0.11, 0.02, 0.13, 0.07];
-    var teamTick = false;
-    var updateTeam = function () {
-      teamTick = false;
-      var r = teamFlow.getBoundingClientRect();
-      var vh = window.innerHeight;
-      if (r.bottom < -300 || r.top > vh + 300) return;   // außerhalb: nichts tun
-      var center = vh / 2 - (r.top + r.height / 2);      // Abstand Sektionsmitte ↔ Viewportmitte
-      teamItems.forEach(function (el, i) {
-        el.style.setProperty("--py", (center * -teamSpeeds[i % teamSpeeds.length]).toFixed(1) + "px");
-      });
+  /* ---------- Horizontale Karussells: Pfeil-Buttons ---------- */
+  $$("[data-carousel]").forEach(function (wrap) {
+    var track = $("[data-track]", wrap);
+    if (!track) return;
+    var step = function (dir) {
+      var item = track.firstElementChild;
+      var w = item ? item.getBoundingClientRect().width + 16 : 300;
+      track.scrollBy({ left: dir * w * 2, behavior: reduceMotion ? "auto" : "smooth" });
     };
-    var onTeamScroll = function () {
-      if (!teamTick) { teamTick = true; requestAnimationFrame(updateTeam); }
+    var prev = $("[data-prev]", wrap), next = $("[data-next]", wrap);
+    if (prev) prev.addEventListener("click", function () { step(-1); });
+    if (next) next.addEventListener("click", function () { step(1); });
+  });
+
+  /* ---------- Intro-Pop-up (nur Startseite) ---------- */
+  var intro = $("#intro");
+  var introOpen = false;
+  var afterIntro = [];
+  function whenIntroClosed(fn) { if (introOpen) afterIntro.push(fn); else fn(); }
+
+  if (intro) {
+    var force = /[?&]intro\b/.test(window.location.search);
+    if (force || getItem("sessionStorage", "ba-intro") !== "1") {
+      introOpen = true;
+      document.documentElement.classList.add("intro-lock");
+      if (typeof intro.showModal === "function") {
+        intro.showModal();
+      } else {
+        intro.setAttribute("open", "");
+      }
+      requestAnimationFrame(function () { intro.classList.add("show"); });
+    }
+    var closeIntro = function () {
+      if (!introOpen) return;
+      introOpen = false;
+      setItem("sessionStorage", "ba-intro", "1");
+      intro.classList.remove("show");
+      document.documentElement.classList.remove("intro-lock");
+      var done = function () {
+        if (typeof intro.close === "function" && intro.open) intro.close();
+        else intro.removeAttribute("open");
+        afterIntro.splice(0).forEach(function (fn) { fn(); });
+      };
+      if (reduceMotion) done(); else setTimeout(done, 260);
     };
-    window.addEventListener("scroll", onTeamScroll, { passive: true });
-    window.addEventListener("resize", onTeamScroll, { passive: true });
-    updateTeam();
+    $$("[data-intro-ok]", intro).forEach(function (b) { b.addEventListener("click", closeIntro); });
+    intro.addEventListener("cancel", function (e) { e.preventDefault(); closeIntro(); });
   }
 
   /* ---------- Cookie-/Consent-Banner + Karten-Freigabe (DSGVO) ---------- */
   (function () {
-    var STORE_KEY = "ba-consent";          // 'all' | 'essential'
-    var banner = document.getElementById("cookieBanner");
-    var mapEmbed = document.getElementById("mapEmbed");
+    var KEY = "ba-consent";                 // 'all' | 'essential'
+    var banner = $("#cookieBanner");
+    var mapEmbed = $("#mapEmbed");
 
-    function getConsent() {
-      try { return localStorage.getItem(STORE_KEY); } catch (e) { return null; }
-    }
-    function setConsent(v) {
-      try { localStorage.setItem(STORE_KEY, v); } catch (e) {}
-    }
-
-    // OpenStreetMap-Karte erst jetzt laden (überträgt Daten an Dritte)
     function loadMap() {
       if (!mapEmbed || mapEmbed.dataset.loaded === "1") return;
       var src = mapEmbed.getAttribute("data-src");
@@ -222,7 +246,6 @@
       mapEmbed.appendChild(iframe);
       mapEmbed.dataset.loaded = "1";
     }
-
     function showBanner() {
       if (!banner) return;
       banner.hidden = false;
@@ -234,22 +257,14 @@
       banner.hidden = true;
     }
 
-    // Startzustand: gespeicherte Wahl anwenden
-    var consent = getConsent();
-    if (consent === "all") {
-      loadMap();
-    } else if (!consent) {
-      showBanner();
-    }
+    var consent = getItem("localStorage", KEY);
+    if (consent === "all") loadMap();
+    else if (!consent) whenIntroClosed(function () { setTimeout(showBanner, 400); });
 
-    function onClick(id, fn) {
-      var el = document.getElementById(id);
-      if (el) el.addEventListener("click", fn);
-    }
-    onClick("cookieAll", function () { setConsent("all"); hideBanner(); loadMap(); });
-    onClick("cookieEssential", function () { setConsent("essential"); hideBanner(); });
-    onClick("cookieSettings", function () { showBanner(); });
-    // „Karte laden“ im Platzhalter: lädt die Karte und merkt sich die Zustimmung
-    onClick("mapLoadBtn", function () { setConsent("all"); loadMap(); hideBanner(); });
+    function onClick(id, fn) { var el = document.getElementById(id); if (el) el.addEventListener("click", fn); }
+    onClick("cookieAll", function () { setItem("localStorage", KEY, "all"); hideBanner(); loadMap(); });
+    onClick("cookieEssential", function () { setItem("localStorage", KEY, "essential"); hideBanner(); });
+    onClick("cookieSettings", showBanner);
+    onClick("mapLoadBtn", function () { setItem("localStorage", KEY, "all"); loadMap(); hideBanner(); });
   })();
 })();
