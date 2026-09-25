@@ -370,8 +370,19 @@ body.nav-open .burger .x { display: block; }
   .row > .i:first-child { width: 26px; height: 26px; }
 
   .car-btns { display: none; }
-  .gallery { grid-auto-columns: 64%; gap: 12px; }
-  .gallery img { filter: none; }
+  /* Team: kompaktes 3er-Raster statt Karussell */
+  .gallery {
+    grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); grid-auto-columns: auto; overflow: visible;
+    gap: 16px 10px; padding-inline: clamp(16px, 4vw, 40px);
+  }
+  .gallery img { filter: none; border-radius: 14px; margin-bottom: .45rem; }
+  .gallery li:hover img { transform: none; }
+  .gallery b { font-size: .85rem; line-height: 1.2; }
+  .gallery small { font-size: .7rem; line-height: 1.25; display: block; }
+  .gallery li:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: calc((100% - 20px) / 3) 1fr; column-gap: 14px; align-items: center; }
+  .gallery li:first-child img { grid-row: span 2; margin: 0; }
+  .gallery li:first-child b { font-size: 1.15rem; align-self: end; }
+  .gallery li:first-child small { font-size: .88rem; align-self: start; }
   .hours div { grid-template-columns: 2.4rem 1fr; }
   .hours dd { font-size: .92rem; }
   .emergency { flex-wrap: wrap; }

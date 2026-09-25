@@ -1,7 +1,7 @@
 /* =========================================================
    Broitzemer Apotheke – Interaktivität
-   Gemeinsam genutzt von allen drei Design-Entwürfen
-   (index.html, index2.html, index3.html). Alle Funktionen
+   Gemeinsam genutzt von allen Design-Entwürfen
+   (index.html … index5.html). Alle Funktionen
    greifen nur, wenn die jeweiligen Elemente auf der Seite existieren.
    ========================================================= */
 (function () {
@@ -199,21 +199,23 @@
   function whenIntroClosed(fn) { if (introOpen) afterIntro.push(fn); else fn(); }
 
   if (intro) {
-    var force = /[?&]intro\b/.test(window.location.search);
-    if (force || getItem("sessionStorage", "ba-intro") !== "1") {
-      introOpen = true;
-      document.documentElement.classList.add("intro-lock");
-      if (typeof intro.showModal === "function") {
-        intro.showModal();
-      } else {
-        intro.setAttribute("open", "");
-      }
-      requestAnimationFrame(function () { intro.classList.add("show"); });
+    // Bei jedem Laden (auch F5) von vorn: Pop-up zeigen, Seite oben beginnen
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    if (window.location.hash) history.replaceState(null, "", window.location.pathname + window.location.search);
+    window.scrollTo(0, 0);
+
+    introOpen = true;
+    document.documentElement.classList.add("intro-lock");
+    if (typeof intro.showModal === "function") {
+      intro.showModal();
+    } else {
+      intro.setAttribute("open", "");
     }
+    requestAnimationFrame(function () { intro.classList.add("show"); });
+
     var closeIntro = function () {
       if (!introOpen) return;
       introOpen = false;
-      setItem("sessionStorage", "ba-intro", "1");
       intro.classList.remove("show");
       document.documentElement.classList.remove("intro-lock");
       var done = function () {

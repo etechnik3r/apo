@@ -304,7 +304,6 @@ body.nav-open .burger .x { display: block; }
 .member b { font-size: 1rem; line-height: 1.25; letter-spacing: -.01em; }
 .member small { color: var(--muted); font-size: .86rem; }
 .member .cert { align-self: flex-start; margin-top: .35rem; padding: .15rem .55rem; border-radius: 999px; background: var(--green-soft); color: var(--green); font-size: .7rem; font-weight: 750; letter-spacing: .06em; }
-.swipe-hint { display: none; }
 
 /* =========================================================
    KONTAKT
@@ -374,7 +373,19 @@ a.ci:hover { background: var(--bg-soft); }
 @media (max-width: 1100px) {
   .header-cta .tel { display: none; }
   .cards { grid-template-columns: repeat(2, 1fr); }
-  .team { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Team am Handy: Inhaberin quer oben, darunter 3 × 3 – alle auf einen Blick, kein Seitwärts-Wischen */
+@media (max-width: 760px) {
+  .team { grid-template-columns: repeat(3, 1fr); gap: 1rem .6rem; }
+  .member img { border-radius: 14px; margin-bottom: .45rem; }
+  .member b { font-size: .82rem; line-height: 1.2; }
+  .member small { font-size: .72rem; line-height: 1.25; }
+  .member .cert { font-size: .6rem; padding: .1rem .4rem; margin-top: .25rem; }
+  .member:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: calc((100% - 1.2rem) / 3) 1fr; column-gap: .9rem; align-items: center; }
+  .member:first-child img { grid-row: span 2; margin: 0; }
+  .member:first-child b { font-size: 1.05rem; align-self: end; }
+  .member:first-child small { font-size: .85rem; align-self: start; }
 }
 
 @media (max-width: 900px) {
@@ -412,17 +423,6 @@ a.ci:hover { background: var(--bg-soft); }
   .svc .i { width: 28px; height: 28px; padding: 6px; border-radius: 50%; }
   .club { grid-template-columns: 1fr; }
 
-  /* Team als wischbares Karussell */
-  .team-wrap { padding-inline: 0; }
-  .team {
-    display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gut);
-    padding-inline: var(--gut); padding-bottom: 6px; scrollbar-width: none;
-  }
-  .team::-webkit-scrollbar { display: none; }
-  .member { flex: 0 0 42%; scroll-snap-align: start; }
-  .swipe-hint { display: flex; align-items: center; gap: .4rem; justify-content: flex-end; padding: .6rem var(--gut) 0; color: var(--muted); font-size: .85rem; }
-  .swipe-hint .i { width: 16px; height: 16px; }
-
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-grid > div:first-child { grid-column: 1 / -1; }
 
@@ -454,7 +454,6 @@ a.ci:hover { background: var(--bg-soft); }
   .card h3 { font-size: 1rem; }
   .card p { font-size: .84rem; }
   .card .go { display: none; }
-  .member { flex-basis: 58%; }
   .float-deliver { display: none; }
   .footer-grid { grid-template-columns: 1fr; }
 }
